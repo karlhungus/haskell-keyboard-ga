@@ -11,6 +11,8 @@ import FitnessAlgorithm(distanceFitnessAlgorithm,FitnessAlgorithm)
 import Data.List(take,drop,sortBy)
 import Data.Ratio((%))
 import Random(StdGen,randomR)
+import Control.Parallel.Strategies 
+
 
 calculateFitness :: [Keyboard] -> FitnessAlgorithm -> [(Double,Keyboard)]
 calculateFitness (k:ks) fa =  ((distanceFitnessAlgorithm k fa),k):(calculateFitness ks fa)
@@ -63,13 +65,13 @@ selectRandomKeyboard k gen = ( (k !! (fst (nextRand (length k -1) gen))) , (snd 
 
 breedPairs :: [(Keyboard,Keyboard)] -> StdGen -> [Keyboard]
 breedPairs [] gen = []
-breedPairs ((k1,k2):ks) gen = (twoPointCrossOver (k1,k2) localNextRand2 localNextRand ):(breedPairs ks (snd (nextRand (kLength k1) nextGen2)))
+breedPairs ((k1,k2):ks) gen = parMap rwhnf breedP ((k1,k2):ks)
                                where localNextPair = (nextRand (kLength k1) gen)
 			             nextGen = snd localNextPair
 				     localNextRand = fst localNextPair
 				     localNextPair2 = (nextRand (localNextRand) nextGen)
 				     localNextRand2 = fst localNextPair2
 				     nextGen2 = snd localNextPair2
-
+                                     breedP (kb1,kb2)=(twoPointCrossOver (kb1,kb2) localNextRand2 localNextRand)
 nextRand :: Int -> StdGen -> (Int,StdGen)
 nextRand l g = randomR (0,l) g::(Int,StdGen)
