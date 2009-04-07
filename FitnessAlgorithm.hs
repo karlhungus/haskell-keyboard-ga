@@ -1,6 +1,6 @@
 module FitnessAlgorithm (distanceFitnessAlgorithm,getFitnessAlgorithm,FitnessAlgorithm) where
 
-import Data.List(sum,find,(!!))
+import Data.List(sum,find,(!!),map)
 import Keyboard(Keyboard,getKeyPos)
 import Data.Maybe(fromJust)
 
@@ -16,8 +16,7 @@ distanceFitnessAlgorithm k fa = sum weightList
 
 --for every element in string determine it's position on keyboard's keys, get the weight from the weight list, add it to a list
 weights :: [String] -> Keyboard -> [Double] -> [Double]
-weights (c:cs) k ws = ((findWeight k ws c)):(weights cs k ws)
-weights [] k ws = []
+weights cs k ws = map (findWeight k ws) cs
 
 
 findWeight :: Keyboard -> [Double] -> String -> Double
