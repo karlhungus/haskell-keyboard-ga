@@ -1,0 +1,35 @@
+Docs
+-Weaknesses
+-good input data (keylogger support?)
+
+GA
+Breeding
+-ERO Crossover
+-Treat it like a travelling salesman problem
+-PMX Crossover
+-MatchingPointCrossover (two sections with same letters swap)
+-Improved Selection algorithm
+
+Fitness Measure
+-meta keys
+-fixed keys
+-finger weights
+-options for turning these off and on
+-caps/meta enabled keys
+-space bar?
+-multiple weighting support?
+
+Code
+-HUnit
+-Abstractions for strategies
+-parallelization
+-cleanup the runner
+-structure/dir structure
+-more generic types (Num instead of Double)
+-Char for keys instead of String (consider how to represent-- may not be
+necessary if everythign but core is fixed)
+
+Visual
+-render using widgets
+-text render
+-printing between generations
