@@ -1,0 +1,17 @@
+Name:           haskell-keyboard-ga
+Version:        0.0.1
+Cabal-Version:  >= 1.2
+License:        BSD3
+Author:         Izaak (John) Alpert
+Synopsis:       A simple genetic algorithm for determing keyboard layouts
+Build-Type:      Simple
+
+Executable keyboardga
+  Build-Depends:  
+        base >= 2.0, 
+        haskell98,
+        directory
+  Main-Is:        Runner.hs
+  Hs-Source-Dirs: src
+  data-dir: data
+  
