@@ -1,7 +1,5 @@
 module WeightReader (getWeights) where
 
-
-
 rowWithWeight :: Double -> String -> [Double]
 rowWithWeight weight charList = foldl (\ acc e -> (weight):acc) [] charList
 

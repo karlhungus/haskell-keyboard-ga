@@ -12,6 +12,6 @@ Executable keyboardga
         haskell98,
         directory
   Main-Is:        Runner.hs
-  Hs-Source-Dirs: src
+  Hs-Source-Dirs: GeneticAlgorithm/Keyboard/
   data-dir: data
   

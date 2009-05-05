@@ -8,13 +8,13 @@ module KeyboardFitness
 
 import Keyboard(Keyboard,breedKeyboards,kLength)
 import FitnessAlgorithm(distanceFitnessAlgorithm,FitnessAlgorithm)
-import Data.List(take,drop,sortBy)
+import Data.List(take,drop,sortBy,map)
 import Data.Ratio((%))
 import Random(StdGen,randomR)
 
 calculateFitness :: [Keyboard] -> FitnessAlgorithm -> [(Double,Keyboard)]
-calculateFitness (k:ks) fa =  ((distanceFitnessAlgorithm k fa),k):(calculateFitness ks fa)
-calculateFitness [] fa = []
+calculateFitness ks fa =  map (calcPairs fa) ks
+                               where calcPairs fa k  = ((distanceFitnessAlgorithm  k fa),k)
 
 
 

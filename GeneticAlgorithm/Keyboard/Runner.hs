@@ -24,50 +24,31 @@ main = do
          let inputArgs = determineArgs args 
 	 
 	 gen <- newStdGen
-         let boards = generateKeyboards (fst (fst inputArgs)) gen--numberOfKeyboards gen
+         let boards = generateKeyboards (fst (fst inputArgs)) gen
              printedBoards = show boards
              readBoards = read printedBoards::[Keyboard]
-	 print "==================Read Boards=============================="
-         --print $ foldl (\ acc a -> (name a):acc) [] boards
-         
+
+         --Input Data File
 	 inputDF <- openFile (fst (snd inputArgs)) ReadMode
          inputDFS <-hGetContents inputDF
          
+         --Input Weight File
 	 inputWs <- openFile (snd (snd inputArgs)) ReadMode
 	 inputWsS <- hGetContents inputWs
 
-	 print "==================Input Data File==========================="
-	 print inputDFS
+         --Only deal with a-z for now
 	 let nothingbutVanella = filter (\ a -> any (\ x  -> x == a)  (['a'..'z'])) inputDFS
 	 let charsToStrings = foldl (\ acc a -> (a:""):acc) [] nothingbutVanella
 	 
-         print "==================Input Weights============================"
-	 print inputWsS
-         print "==================Read Weight File========================"
 	 let readWeights = getWeights inputWsS
-	 --print readWeights
          let fa = getFitnessAlgorithm (charsToStrings) readWeights
-	 let fitnesses = calculateFitness readBoards fa 
-	 --print $ foldl (\ acc a -> (fst a,(name (snd a))):acc) [] fitnesses
-	 
-         let trunc = truncationSelect fitnesses (1%2)
-	 --print $ foldl (\ acc a -> (fst a,(name (snd a))):acc) [] trunc
-	 --FitnessAlgorithm
-	 let parents = (snd (trunc !! 0), snd (trunc !! 1))
-         let child = twoPointCrossOver parents  3 7
-	 
-        -- print $ (name (fst parents),name (snd parents))
-	-- print $ name child
-	 print "============================BREED POP=============================="
-	 let newPop = breedPopulation (foldl (\ acc a -> (snd a):acc) [] trunc) gen 
-	 --print $ foldl (\ acc a -> (name a):acc) [] newPop
 
+         --number of generations to read in
 	 let nogenerations = (snd (fst inputArgs))
-	 let banner =  "============================RUN GEN "++ (show nogenerations) ++"==============================="
+	 let banner =  "==========================Running Generations"++ (show nogenerations) ++"==============================="
 	 print banner
 	 let initFitness = calculateFitness readBoards fa
 	 let generation = (runGenerations readBoards fa gen nogenerations)
-	 --let generation = runGeneration readBoards fa gen 
 	 let  postFitness = calculateFitness generation fa
 
          print "Init Gen"

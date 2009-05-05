@@ -1,0 +1,3 @@
+To Run:
+runhaskell Setup configure --with-compiler=ghc --user  && runhaskell Setup build && dist/build/keyboardga/keyboardga 10 10 GeneticAlgorithm/Keyboard/data/test/input/testInput GeneticAlgorithm/Keyboard/data/weights/diNovoEdgeWeigts.hs 
+
